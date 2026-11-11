@@ -55,3 +55,15 @@ dialog::backdrop { background: #000b; }
   .paper { padding: 26px 18px; font-size: 13px; }
   .receipt-meta, .columns, .receipt-bottom { font-size: 12px; }
 }
+.items li{position:relative;overflow:hidden}
+.items li.covered-item::after,.items li.swipe-away::after{content:'';position:absolute;inset:0;background:#111}
+.items li.swipe-away::after{animation:receipt-wipe .55s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes receipt-wipe{to{transform:translateX(105%)}}
+@media (prefers-reduced-motion:reduce){.items li.swipe-away::after{animation:none;transform:translateX(105%)}}
+.top-actions{display:flex;align-items:center;gap:10px}
+.stats-button{width:29px;height:29px;border:1px solid #818384;border-radius:50%;background:transparent;color:#f8f8f8;font-weight:bold;font-size:16px;line-height:1}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:25px 0 30px;text-align:center}
+.stats-grid div{display:flex;flex-direction:column;gap:7px}
+.stats-grid strong{font:500 30px/1 Arial,Helvetica,sans-serif}
+.stats-grid span{font-size:11px;line-height:1.3;color:#aaa}
+.stats-dialog .share{display:block;margin:0 auto}

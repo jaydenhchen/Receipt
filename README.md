@@ -8,6 +8,6 @@ Push these files to a GitHub repository. In **Settings → Pages**, select **Dep
 
 ## Puzzles and progress
 
-`game.js` contains the hand-authored puzzle bank and accepted answers. The UTC calendar day deterministically selects a puzzle; the small bank cycles, so add and playtest more puzzles before a wider launch. Each puzzle has eight ordered items and accepted normalized answer phrases. Prices are decorative. Adding or reordering puzzles changes the schedule, so avoid doing so during a live day.
+`game.js` contains the hand-authored puzzle bank and accepted answers. The EST calendar day deterministically selects a puzzle; the small bank cycles, so add and playtest more puzzles before a wider launch. Each puzzle has eight ordered items and accepted normalized answer phrases. Prices are decorative. Adding or reordering puzzles changes the schedule, so avoid doing so during a live day.
 
-Guesses and completed results are saved in the browser's local storage, per UTC date. They do not sync across devices or survive clearing site data. Answers are in the client code, so this is not cheat-proof. There is no analytics or backend.
+Guesses and completed results are saved in the browser's local storage, per EST date. Lifetime statistics are saved there as well. They do not sync across devices or survive clearing site data. Answers are in the client code, so this is not cheat-proof. There is no analytics or backend.
