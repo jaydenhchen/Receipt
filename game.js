@@ -131,10 +131,18 @@ $('share').addEventListener('click', async () => {
   catch (_) { $('share-feedback').textContent = 'Could not copy automatically. Select and copy your result below.'; const box = document.createElement('textarea'); box.value = text; box.readOnly = true; box.setAttribute('aria-label', 'Share result'); $('share-feedback').append(document.createElement('br'), box); box.select(); }
 });
 $('play-button').addEventListener('click', () => {
-  $('welcome').hidden = true;
-  $('game-shell').hidden = false;
+  const welcome = $('welcome');
+  const gameShell = $('game-shell');
+  $('play-button').disabled = true;
+  gameShell.classList.add('is-entering');
+  gameShell.hidden = false;
   $('theme-color').setAttribute('content', '#121213');
-  $('guess').focus();
+  requestAnimationFrame(() => welcome.classList.add('is-exiting'));
+  window.setTimeout(() => {
+    welcome.hidden = true;
+    gameShell.classList.remove('is-entering');
+    $('guess').focus();
+  }, 350);
 });
 $('help-button').addEventListener('click', () => $('help').showModal());
 $('close-help').addEventListener('click', () => $('help').close());
