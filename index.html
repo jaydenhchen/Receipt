@@ -3,31 +3,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f1e9">
+  <meta name="theme-color" content="#121213">
   <meta name="description" content="A little daily mystery, hiding in a shopping receipt.">
   <title>Receipt — a daily guessing game</title>
   <link rel="stylesheet" href="style.css">
   <script src="game.js" defer></script>
 </head>
 <body>
-  <header class="topbar"><a class="brand" href="./">receipt<span>.</span></a><button class="help-button" id="help-button" type="button" aria-label="How to play">?</button></header>
+  <header class="topbar"><button class="help-button" id="help-button" type="button" aria-label="How to play">?</button></header>
   <main>
-    <div class="intro"><p class="eyebrow">A LITTLE DAILY MYSTERY</p><h1>Read between<br>the <em>lines.</em></h1><p>Someone went shopping. Can you figure out why?</p></div>
     <section class="paper" aria-label="Today's receipt">
-      <div class="receipt-header"><div class="store-mark">✳</div><h2>THE DAILY RECEIPT</h2><p>THANK YOU FOR STOPPING BY</p></div>
+      <div class="receipt-header"><h1>receipt</h1></div>
       <div class="receipt-meta"><span id="receipt-number"></span><span id="receipt-date"></span></div>
       <div class="rule"></div><div class="columns"><span>ITEM DESCRIPTION</span><span>PRICE</span></div>
       <ul id="items" class="items" aria-label="Receipt items"></ul>
       <div class="rule"></div><div class="receipt-bottom"><span>ITEMS REVEALED</span><span id="revealed"></span></div>
-      <p class="receipt-note">A NEW MYSTERY EVERY DAY<br>NO RETURNS ON WRONG GUESSES</p><div class="barcode" aria-hidden="true"></div><p class="barcode-number">0 12345 67890 1</p>
+      <div class="barcode" aria-hidden="true"></div><p class="barcode-number">0 12345 67890 1</p>
     </section>
-    <section class="play" aria-label="Make a guess"><div class="play-heading"><div><p class="eyebrow">THE QUESTION</p><h2>What are they doing?</h2></div><span class="counter" id="counter"></span></div><p class="hint">Describe the activity, not the items.</p>
-      <form id="guess-form"><label class="sr-only" for="guess">Your guess</label><input id="guess" name="guess" placeholder="e.g. making a birthday cake" autocomplete="off" maxlength="100" required><button type="submit">GUESS <span aria-hidden="true">↗</span></button></form>
+    <section class="play" aria-label="Make a guess">
+      <form id="guess-form"><label class="sr-only" for="guess">Your guess</label><input id="guess" name="guess" placeholder="Type your guess and press Enter" autocomplete="off" enterkeyhint="send" maxlength="100" required></form>
       <p id="feedback" class="feedback" aria-live="polite"></p><ol id="guesses" class="guesses" aria-label="Previous guesses"></ol>
       <div id="result" class="result" hidden><p class="eyebrow" id="result-label"></p><h3 id="result-answer"></h3><p id="result-detail"></p><button id="share" class="share" type="button">SHARE YOUR RESULT ↗</button><p id="share-feedback" aria-live="polite"></p><p class="next">NEXT RECEIPT IN <strong id="countdown"></strong> · RESETS AT 00:00 UTC</p></div>
     </section>
   </main>
-  <footer>ONE RECEIPT. ONE MYSTERY. EVERY DAY. <span>✳</span></footer>
+  <span id="counter" class="sr-only" aria-live="polite"></span>
   <dialog id="help"><div class="dialog-content"><button id="close-help" class="close" type="button" aria-label="Close">×</button><p class="eyebrow">THE FINE PRINT</p><h2>How to play</h2><p>A shopping receipt tells a story. Your job is to figure out what the shopper is doing.</p><ol><li>Start with three items on today’s receipt.</li><li>Type your guess. Each miss reveals another item.</li><li>You have six guesses to solve the mystery.</li></ol><p>Everyone gets the same puzzle. A new receipt arrives at midnight UTC.</p><button id="got-it" class="share" type="button">GOT IT</button></div></dialog>
 </body>
 </html>

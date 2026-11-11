@@ -1,6 +1,6 @@
 # Receipt
 
-A static daily guessing game: infer an activity from a shopping receipt in six guesses. Open `index.html` locally or serve this directory with any static web server. No build step or server-side service is required.
+A static daily guessing game: infer an activity from a shopping receipt in six guesses. Type a guess and press Enter to submit it; each incorrect guess reveals another item. Open `index.html` locally or serve this directory with any static web server. No build step or server-side service is required.
 
 ## GitHub Pages
 
