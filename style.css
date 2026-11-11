@@ -61,7 +61,12 @@ dialog::backdrop { background: #000b; }
 @keyframes receipt-wipe{to{transform:translateX(105%)}}
 @media (prefers-reduced-motion:reduce){.items li.swipe-away::after{animation:none;transform:translateX(105%)}}
 .top-actions{display:flex;align-items:center;gap:10px}
-.stats-button{width:29px;height:29px;border:1px solid #818384;border-radius:50%;background:transparent;color:#f8f8f8;font-weight:bold;font-size:16px;line-height:1}
+.stats-button{width:29px;height:29px;border:1px solid #818384;border-radius:50%;background:transparent;color:#f8f8f8;display:grid;place-items:center}
+.bar-chart{height:15px;display:flex;align-items:end;gap:2px}
+.bar-chart span{display:block;width:3px;background:#f8f8f8}
+.bar-chart span:nth-child(1){height:7px}
+.bar-chart span:nth-child(2){height:11px}
+.bar-chart span:nth-child(3){height:15px}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:25px 0 30px;text-align:center}
 .stats-grid div{display:flex;flex-direction:column;gap:7px}
 .stats-grid strong{font:500 30px/1 Arial,Helvetica,sans-serif}
@@ -83,3 +88,4 @@ dialog::backdrop { background: #000b; }
 .welcome-date{margin:28px 0 0;color:#6b6f72;font-size:12px;letter-spacing:.06em}
 @media (max-width: 380px){.welcome h1{font-size:44px}.welcome-copy{font-size:18px}.cover-title{gap:3px}.cover-tile{width:35px;height:35px;font-size:18px}}
 .paper::after{content:'';position:absolute;left:0;right:0;bottom:-5px;height:6px;background:linear-gradient(135deg,#fff 25%,transparent 25%) 0 0/8px 6px,linear-gradient(225deg,#fff 25%,transparent 25%) 0 0/8px 6px}
+.paper::before{content:'';position:absolute;left:0;right:0;top:-5px;height:6px;background:linear-gradient(135deg,#fff 25%,transparent 25%) 0 0/8px 6px,linear-gradient(225deg,#fff 25%,transparent 25%) 0 0/8px 6px;transform:rotate(180deg)}
