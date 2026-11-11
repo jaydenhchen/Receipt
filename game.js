@@ -12,13 +12,15 @@ const puzzles = [
   { answer: 'Making homemade pizza', answers: ['making homemade pizza', 'making pizza', 'baking homemade pizza', 'baking pizza', 'cooking pizza', 'homemade pizza', 'pizza night', 'making a pizza from scratch', 'baking a pizza from scratch'], items: [['OLIVE OIL','8.99'],['FRESH BASIL','2.49'],['PIZZA DOUGH','3.49'],['TOMATO SAUCE','2.29'],['MOZZARELLA CHEESE','4.99'],['PEPPERONI','3.79'],['CORNMEAL','2.19'],['PIZZA CUTTER','6.49']] },
 ];
 const DAY = 86400000;
+const EST_OFFSET = 5 * 60 * 60 * 1000;
+const currentDay = () => Math.floor((Date.now() - EST_OFFSET) / DAY);
 const epoch = Date.UTC(2026, 0, 1) / DAY;
 const $ = id => document.getElementById(id);
 const normalize = text => text.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/['’]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 let day, puzzle, state;
 
 function loadDay() {
-  day = Math.floor(Date.now() / DAY);
+  day = currentDay();
   const index = ((day - epoch) % puzzles.length + puzzles.length) % puzzles.length;
   puzzle = puzzles[index];
   let saved = null;
@@ -70,7 +72,7 @@ function render(revealIndex = -1) {
 }
 $('guess-form').addEventListener('submit', event => {
   event.preventDefault();
-  if (Math.floor(Date.now() / DAY) !== day) { loadDay(); $('feedback').textContent = 'A new receipt is here!'; return; }
+  if (currentDay() !== day) { loadDay(); $('feedback').textContent = 'A new receipt is here!'; return; }
   const guess = $('guess').value.trim();
   if (!normalize(guess)) { $('feedback').textContent = 'Please enter an activity.'; return; }
   if (state.solved || state.guesses.length >= 6) return;
@@ -92,8 +94,8 @@ $('close-help').addEventListener('click', () => $('help').close());
 $('got-it').addEventListener('click', () => $('help').close());
 function tick() {
   const now = Date.now();
-  if (Math.floor(now / DAY) !== day) loadDay();
-  const seconds = Math.ceil(((day + 1) * DAY - now) / 1000);
+  if (currentDay() !== day) loadDay();
+  const seconds = Math.ceil(((day + 1) * DAY + EST_OFFSET - now) / 1000);
   $('countdown').textContent = [Math.floor(seconds / 3600), Math.floor(seconds % 3600 / 60), seconds % 60].map(n => String(n).padStart(2, '0')).join(':');
 }
 loadDay(); tick(); setInterval(tick, 1000);
