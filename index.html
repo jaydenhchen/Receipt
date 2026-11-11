@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#121213">
+  <meta name="theme-color" content="#ffffff" id="theme-color">
   <meta name="description" content="A little daily mystery, hiding in a shopping receipt.">
   <title>Receipt — a daily guessing game</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -15,7 +15,7 @@
     <div class="welcome-card">
       <img class="welcome-logo" src="favicon.svg" alt="">
       <p class="welcome-kicker">A LITTLE DAILY MYSTERY</p>
-      <h1 id="welcome-title">receipt<span>.</span></h1>
+      <h1 id="welcome-title" class="cover-title" aria-label="receipt."><span class="cover-tile cover-tile-correct" aria-hidden="true">R</span><span class="cover-tile cover-tile-absent" aria-hidden="true">E</span><span class="cover-tile cover-tile-present" aria-hidden="true">C</span><span class="cover-tile" aria-hidden="true">E</span><span class="cover-tile" aria-hidden="true">I</span><span class="cover-tile" aria-hidden="true">P</span><span class="cover-tile" aria-hidden="true">T</span><span class="sr-only">receipt.</span></h1>
       <p class="welcome-copy">Infer what someone is doing from a shopping receipt.</p>
       <button id="play-button" class="play-button" type="button">PLAY</button>
       <p class="welcome-date" id="welcome-date"></p>
