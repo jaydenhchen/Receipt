@@ -87,8 +87,8 @@ function render(revealIndex = -1) {
       if (index === revealIndex) li.className = 'swipe-away';
     } else {
       li.className = 'hidden-item covered-item';
-      label.textContent = name; amount.textContent = price;
-      li.setAttribute('aria-label', 'Hidden item');
+      label.textContent = '••••••••••••••••';
+      amount.textContent = '••••';
     }
     li.append(label, amount);
     return li;
