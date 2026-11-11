@@ -13,7 +13,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #fff; outline-off
 .topbar { height: 60px; border-bottom: 1px solid #3a3a3c; display: flex; align-items: center; justify-content: flex-end; padding: 0 24px; }
 .help-button, .close { width: 29px; height: 29px; border: 1px solid #818384; border-radius: 50%; background: transparent; color: #f8f8f8; font-weight: bold; }
 main { width: min(100%, 440px); margin: 0 auto; padding: 32px 20px 64px; }
-.paper { background: #fff; color: #111; padding: 30px 24px 28px; font: 15px/1.3 'Courier New', Courier, monospace; }
+.paper { position: relative; background: #fff; color: #111; padding: 30px 24px 28px; font: 15px/1.3 'Courier New', Courier, monospace; }
 .receipt-header { text-align: center; margin-bottom: 34px; }
 .receipt-header h1 { margin: 0; font: bold 25px/1 'Courier New', Courier, monospace; }
 .receipt-meta, .columns, .receipt-bottom { display: flex; justify-content: space-between; gap: 12px; }
@@ -78,3 +78,4 @@ dialog::backdrop { background: #000b; }
 .play-button{border:0;border-radius:999px;background:#f8f8f8;color:#121213;padding:15px 74px;font-size:16px;font-weight:bold;letter-spacing:.08em}
 .welcome-date{margin:28px 0 0;color:#aaa;font-size:12px;letter-spacing:.06em}
 @media (max-width: 380px){.welcome h1{font-size:44px}.welcome-copy{font-size:18px}}
+.paper::after{content:'';position:absolute;left:0;right:0;bottom:-5px;height:6px;background:linear-gradient(135deg,#fff 25%,transparent 25%) 0 0/8px 6px,linear-gradient(225deg,#fff 25%,transparent 25%) 0 0/8px 6px}
