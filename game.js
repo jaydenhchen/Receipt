@@ -17,9 +17,10 @@ const currentDay = () => Math.floor((Date.now() - EST_OFFSET) / DAY);
 const epoch = Date.UTC(2026, 0, 1) / DAY;
 const $ = id => document.getElementById(id);
 const normalize = text => text.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/['’]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
-let day, puzzle, state;
+let day, puzzle, state, stats;
 
 function loadDay() {
+  if (!stats) stats = loadStats();
   day = currentDay();
   const index = ((day - epoch) % puzzles.length + puzzles.length) % puzzles.length;
   puzzle = puzzles[index];
@@ -30,10 +31,46 @@ function loadDay() {
   $('receipt-date').textContent = new Date(day * DAY).toISOString().slice(0, 10);
   $('feedback').textContent = '';
   $('guess').value = '';
+  if (state.solved || state.guesses.length >= 6) recordStats();
+  renderStats();
   render();
 }
 function save() {
   try { localStorage.setItem(`receipt:${day}`, JSON.stringify(state)); } catch (_) { /* The game remains playable without storage. */ }
+}
+function defaultStats() {
+  return { played: 0, wins: 0, currentStreak: 0, maxStreak: 0, lastDay: null };
+}
+function loadStats() {
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem('receipt:stats')); } catch (_) { /* Storage may be unavailable. */ }
+  if (!saved || !Number.isFinite(saved.played) || !Number.isFinite(saved.wins) || !Number.isFinite(saved.currentStreak) || !Number.isFinite(saved.maxStreak)) return defaultStats();
+  return { played: saved.played, wins: saved.wins, currentStreak: saved.currentStreak, maxStreak: saved.maxStreak, lastDay: Number.isFinite(saved.lastDay) ? saved.lastDay : null };
+}
+function saveStats() {
+  try { localStorage.setItem('receipt:stats', JSON.stringify(stats)); } catch (_) { /* The game remains playable without storage. */ }
+}
+function renderStats() {
+  $('stat-played').textContent = stats.played;
+  $('stat-win-rate').textContent = `${stats.played ? Math.round(stats.wins / stats.played * 100) : 0}`;
+  $('stat-current-streak').textContent = stats.currentStreak;
+  $('stat-max-streak').textContent = stats.maxStreak;
+}
+function recordStats() {
+  if (state.statsRecorded) return;
+  stats.played += 1;
+  if (state.solved) {
+    stats.wins += 1;
+    stats.currentStreak = stats.lastDay === day - 1 ? stats.currentStreak + 1 : 1;
+    stats.maxStreak = Math.max(stats.maxStreak, stats.currentStreak);
+  } else {
+    stats.currentStreak = 0;
+  }
+  stats.lastDay = day;
+  state.statsRecorded = true;
+  saveStats();
+  save();
+  renderStats();
 }
 function render(revealIndex = -1) {
   const count = state.guesses.length;
@@ -79,6 +116,7 @@ $('guess-form').addEventListener('submit', event => {
   state.guesses.push(guess);
   state.solved = puzzle.answers.some(answer => normalize(answer) === normalize(guess));
   const revealIndex = state.solved ? -1 : Math.min(2 + state.guesses.length, puzzle.items.length) - 1;
+  if (state.solved || state.guesses.length >= 6) recordStats();
   save(); render(revealIndex);
   $('guess').value = '';
   $('feedback').textContent = state.solved || state.guesses.length >= 6 ? '' : 'Not quite. Another item has been revealed.';
@@ -92,6 +130,9 @@ $('share').addEventListener('click', async () => {
 $('help-button').addEventListener('click', () => $('help').showModal());
 $('close-help').addEventListener('click', () => $('help').close());
 $('got-it').addEventListener('click', () => $('help').close());
+$('stats-button').addEventListener('click', () => $('stats').showModal());
+$('close-stats').addEventListener('click', () => $('stats').close());
+$('stats-done').addEventListener('click', () => $('stats').close());
 function tick() {
   const now = Date.now();
   if (currentDay() !== day) loadDay();
