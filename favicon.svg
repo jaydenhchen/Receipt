@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Receipt</title>
+  <desc id="desc">A small paper receipt</desc>
+  <rect width="64" height="64" rx="14" fill="#121213"/>
+  <path d="M17 9h30v37l-5 9-5-5-5 5-5-5-5 5-5-9V9Z" fill="#fff" stroke="#121213" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M23 19h18M23 27h18M23 35h11" stroke="#121213" stroke-width="3" stroke-linecap="round"/>
+  <path d="M38 35h3" stroke="#c8a832" stroke-width="3" stroke-linecap="round"/>
+</svg>

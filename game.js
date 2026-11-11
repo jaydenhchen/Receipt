@@ -28,7 +28,9 @@ function loadDay() {
   try { saved = JSON.parse(localStorage.getItem(`receipt:${day}`)); } catch (_) { /* Storage may be unavailable. */ }
   state = saved && Array.isArray(saved.guesses) ? saved : { guesses: [], solved: false };
   $('receipt-number').textContent = `RECEIPT #${String(day - epoch + 1).padStart(3, '0')}`;
-  $('receipt-date').textContent = new Date(day * DAY).toISOString().slice(0, 10);
+  const receiptDate = new Date(day * DAY).toISOString().slice(0, 10);
+  $('receipt-date').textContent = receiptDate;
+  $('welcome-date').textContent = `TODAY'S RECEIPT · ${receiptDate}`;
   $('feedback').textContent = '';
   $('guess').value = '';
   if (state.solved || state.guesses.length >= 6) recordStats();
@@ -96,13 +98,14 @@ function render(revealIndex = -1) {
   $('guesses').replaceChildren(...state.guesses.map((guess, index) => {
     const li = document.createElement('li');
     const text = document.createElement('div'); text.textContent = guess;
-    const status = document.createElement('span'); status.textContent = state.solved && index === count - 1 ? 'CORRECT' : 'NOT QUITE';
+    const isCorrect = state.solved && index === count - 1;
+    if (isCorrect) li.className = 'correct-guess';
+    const status = document.createElement('span'); status.textContent = isCorrect ? 'CORRECT' : 'NOT QUITE';
     li.append(text, status); return li;
   }));
   $('guess-form').hidden = finished;
   $('result').hidden = !finished;
   if (finished) {
-    $('result-label').textContent = state.solved ? 'MYSTERY SOLVED' : 'BETTER LUCK TOMORROW';
     $('result-answer').textContent = puzzle.answer + '.';
     $('result-detail').textContent = state.solved ? `You figured it out in ${count} ${count === 1 ? 'guess' : 'guesses'}. Nice work.` : 'That was the story behind today’s receipt.';
   }
@@ -126,6 +129,11 @@ $('share').addEventListener('click', async () => {
   const text = `RECEIPT #${String(day - epoch + 1).padStart(3, '0')}\n${state.solved ? `Solved in ${count}/6` : 'Not solved in 6/6'}\n\n${'⬜'.repeat(count - (state.solved ? 1 : 0))}${state.solved ? '🟩' : ''}\n${location.href.split(/[?#]/)[0]}`;
   try { await navigator.clipboard.writeText(text); $('share-feedback').textContent = 'Copied to clipboard.'; }
   catch (_) { $('share-feedback').textContent = 'Could not copy automatically. Select and copy your result below.'; const box = document.createElement('textarea'); box.value = text; box.readOnly = true; box.setAttribute('aria-label', 'Share result'); $('share-feedback').append(document.createElement('br'), box); box.select(); }
+});
+$('play-button').addEventListener('click', () => {
+  $('welcome').hidden = true;
+  $('game-shell').hidden = false;
+  $('guess').focus();
 });
 $('help-button').addEventListener('click', () => $('help').showModal());
 $('close-help').addEventListener('click', () => $('help').close());
