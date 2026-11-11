@@ -133,6 +133,7 @@ $('share').addEventListener('click', async () => {
 $('play-button').addEventListener('click', () => {
   $('welcome').hidden = true;
   $('game-shell').hidden = false;
+  $('theme-color').setAttribute('content', '#121213');
   $('guess').focus();
 });
 $('help-button').addEventListener('click', () => $('help').showModal());
